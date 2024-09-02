@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Artificial Knowledge Utility</title>
+</head>
+<h1>Artificial Knowledge Utility</h1>
+
+<h2>This project aims to develop a web-crawling-based LLM that will present information like other LLM models but won’t require additional training. The idea is simple:</h2>
+
+    <li>Develop a custom web scraper.</li>
+    <li>Create a web crawler using the web scraper.</li>
+    <li>Write an engine that functions as an interface between the data collected by the web scraper and the LLM, which will provide more accurate answers by correcting grammar and semantics.</li>
+<p>------------------------------------------------------------------------------------------------------</p>
+    <li>I will need to develop an algorithm to filter websites and scrape only the most relevant ones. I will create one and update it here in a week or two.</li>
+    <li>This step is relatively easy to accomplish.</li>
+    <li>I will need to conduct research on this topic first. I will provide an update later.</li>
+
+<p><i>(Note: This project aims to develop a simple web-based chatbot designed for specific tasks, unlike other LLMs such as ChatGPT, Claude, etc.)</i></p>
+
+<p>(09/02/2024)</p>
+
+</html>
