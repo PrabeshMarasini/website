@@ -6,12 +6,14 @@
     <title>Prabesh Marasini</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Main content styling */
         body {
             background-color: white;
             color: black;
             font-family: Arial, sans-serif;
             margin: 20px;
             line-height: 1.6;
+            overflow: hidden; /* Hide any potential scrollbars from the blinking lights */
         }
         h1 {
             text-align: center;
@@ -25,20 +27,101 @@
         ul, li {
             margin-left: 20px;
         }
+        .icon {
+            font-size: 100px; /* Adjust size here */
+            color: #FF0000; /* YouTube red color */
+            animation: rotate 3s linear infinite; /* Animation for continuous rotation */
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Blinking lights styling */
+        .light {
+            width: 7px;
+            height: 7px;
+            border-radius: 100%;
+            position: fixed;
+            opacity: 0;
+            transition: opacity 0.5s, transform 1s;
+
+            /* Bright, intense gradient and shadows to enhance glow effect */
+            background: radial-gradient(circle, rgba(255, 255, 255, 1), transparent 70%);
+            box-shadow: 
+                0 0 30px 15px rgba(255, 255, 255, 0.8),
+                0 0 50px 30px rgba(255, 255, 255, 0.6),
+                0 0 80px 50px rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 <body>
-  <h1>IC Firewall</h1>
-  <h2><a href="https://www.github.com/PrabeshMarasini/IC-Firewall">IC Firewall Github Repository</a></h2></br>
-  <h3>This project aims to develop a Firewall that can connect to multiple devices, including servers, to monitor and manage network traffic.</h3>
-  <h2><b>Stage 1: Packet Tracing and Filtering</b></h2>
-  <ul>
-    <p>In the initial stage, the focus will be on creating a packet tracing system. This will involve:</p>
-    <li><b>Tracking incoming and outgoing packets</b> on the device in real time.</li>
-    <li><b>Logging source and destination ports</b> associated with each packet, allowing for port-specific monitoring.</li>
-    <li><b>Extracting IP addresses</b> from packet headers to identify where packets are coming from and where they are going.</li>
-    <li><b>Blocking packets from suspicious IP addresses</b> that may pose security threats.</li>
-  </ul>
-  <p>Root access will be required to enable low-level network monitoring and packet filtering functionalities. Development will initially target Linux platforms.</p>
+
+    <!-- Main content -->
+    <h1>IC Firewall</h1>
+    <h2><a href="https://www.github.com/PrabeshMarasini/IC-Firewall">IC Firewall Github Repository</a></h2>
+    <br>
+    <i class="fab fa-youtube icon"></i>
+    <br><br>
+    <a href="https://youtube.com/@loppin6154?si=j1q8aFjcm1foBnnf">SUBSCRIBE!!</a>
+    <h3>This project aims to develop a Firewall that can connect to multiple devices, including servers, to monitor and manage network traffic.</h3>
+    <h2><b>Stage 1: Packet Tracing and Filtering</b></h2>
+    <ul>
+        <p>In the initial stage, the focus will be on creating a packet tracing system. This will involve:</p>
+        <li><b>Tracking incoming and outgoing packets</b> on the device in real time.</li>
+        <li><b>Logging source and destination ports</b> associated with each packet, allowing for port-specific monitoring.</li>
+        <li><b>Extracting IP addresses</b> from packet headers to identify where packets are coming from and where they are going.</li>
+        <li><b>Blocking packets from suspicious IP addresses</b> that may pose security threats.</li>
+    </ul>
+    <p>Root access will be required to enable low-level network monitoring and packet filtering functionalities. Development will initially target Linux platforms.</p>
+
+    <!-- Blinking lights script -->
+    <script>
+        // Define an array of brighter colors for the lights
+        const colors = ['#FFFF66', '#FF6666', '#66FF66', '#66FFFF', '#FF66FF', '#FFFF33'];
+
+        // Function to create and animate a light
+        function createLight() {
+            // Create a light element
+            const light = document.createElement('div');
+            light.classList.add('light');
+
+            // Set random color, position, and size for each light
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            light.style.background = `radial-gradient(circle, ${color} 30%, transparent 70%)`;
+            light.style.boxShadow = `
+                0 0 30px 15px ${color}80,
+                0 0 50px 30px ${color}60,
+                0 0 80px 50px ${color}40
+            `;
+            light.style.left = Math.random() * 100 + 'vw';
+            light.style.top = Math.random() * 100 + 'vh';
+
+            // Add the light to the body
+            document.body.appendChild(light);
+
+            // Trigger the glow effect with a brief delay
+            setTimeout(() => {
+                light.style.opacity = 1;
+                light.style.transform = 'scale(1.5)';
+            }, 10);
+
+            // Fade out and remove the light after it glows
+            setTimeout(() => {
+                light.style.opacity = 0;
+                light.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    light.remove();
+                }, 500);
+            }, 500); // The glow duration
+        }
+
+        // Create lights at a faster interval for higher density
+        setInterval(createLight, 50); // Adjust interval for more or fewer lights
+    </script>
 </body>
 </html>
