@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serverless VPN Setup</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>WireGuard Client-to-Client VPN Setup (Serverless)</h1>
+    <p>This article provides a step-by-step guide on how to set up a WireGuard VPN for two clients on Linux. The setup allows direct communication between two clients without the need for a centralized server.</p>
+    
+    <div class="step">
+        <h3>Install WireGuard</h3>
+        <code>
+            sudo apt update
+            sudo apt install wireguard
+        </code>
+    </div>
+
+    <div class="step">
+        <h3>Step 1: Generate WireGuard Keys for Both Clients</h3>
+        <h4>Each client requires a private and public key pair for secure communication.</h4>
+
+        <h5>On Client 1:</h5>
+        <code>
+            mkdir -p ~/wireguard-test/client1
+            cd ~/wireguard-test/client1
+            wg genkey | tee privatekey | wg pubkey > publickey
+        </code>
+        <p>You can check private and public keys by using the following commands:</p>
+        <code>
+            cat ~/wireguard-test/client1/privatekey
+            {Your Private Key}
+            cat ~/wireguard-test/client1/publickey
+            {Your Public Key}
+        </code>
+
+        <h5>On Client 2:</h5>
+        <code>
+            mkdir -p ~/wireguard-test/client2
+            cd ~/wireguard-test/client2
+            wg genkey | tee privatekey | wg pubkey > publickey
+        </code>
+        <p>You can check private and public keys by using the following commands:</p>
+        <code>
+            cat ~/wireguard-test/client2/privatekey
+            {Your Private Key}
+            cat ~/wireguard-test/client2/publickey
+            {Your Public Key}
+        </code>
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Create Configuration Files for Both Clients</h3>
+        <h5>For Client 1:</h5>
+        <code>
+            cd ~/wireguard-test/client1
+            nano wg-client1.conf
+        </code>
+        <p>Paste this snippet in the terminal text editor:</p>
+        <code>
+            [Interface]
+            PrivateKey = {Your Private Key}
+            Address = 192.168.1.1/24, fd00::1/64
+            ListenPort = 51820
+
+            [Peer]
+            PublicKey = {Your Public Key}
+            AllowedIPs = 192.168.1.2/32, fd00::2/128
+            Endpoint = 127.0.0.1:51821
+        </code>
+
+        <h5>For Client 2:</h5>
+        <code>
+            cd ~/wireguard-test/client2
+            nano wg-client2.conf
+        </code>
+        <p>Paste this snippet in the terminal text editor:</p>
+        <code>
+            [Interface]
+            PrivateKey = {Your Private Key}
+            Address = 192.168.1.2/24, fd00::2/64
+            ListenPort = 51821
+
+            [Peer]
+            PublicKey = {Your Public Key}
+            AllowedIPs = 192.168.1.1/32, fd00::1/128
+            Endpoint = 127.0.0.1:51820
+        </code>
+    </div>
+
+    <div class="step">
+        <h3>Step 3: Bring Up the WG Interface</h3>
+        <h5>For Client 1:</h5>
+        <code>
+            sudo wg-quick up ~/wireguard-test/client1/wg-client1.conf
+        </code>
+
+        <h5>For Client 2:</h5>
+        <code>
+            sudo wg-quick up ~/wireguard-test/client2/wg-client2.conf
+        </code>
+    </div>
+
+    <div class="step">
+        <h3>Step 4: Verify the Connection</h3>
+        <h5>For Client 1:</h5>
+        <code>
+            ping 192.168.1.1
+            ping6 fd00::1
+        </code>
+
+        <h5>For Client 2:</h5>
+        <code>
+            ping 192.168.1.1
+            ping6 fd00::1
+        </code>
+    </div>
+
+    <p>By following these steps, you have successfully set up a serverless WireGuard VPN with two Linux clients.</p>
+</body>
+</html>
